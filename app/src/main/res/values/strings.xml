@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Reservation</string>
+    <string name="tv_name">Name:</string>
+    <string name="tv_num">Mobile Number:</string>
+    <string name="tv_pax">Size Of Group:</string>
+    <string name="btn_confirm">CONFIRM</string>
+    <string name="btn_reset">RESET</string>
+    <string name="cb_smoke">Do you intend to smoke?</string>
+</resources>
