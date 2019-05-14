@@ -43,23 +43,34 @@ public class MainActivity extends AppCompatActivity {
         dp = findViewById(R.id.datePicker);
         tp = findViewById(R.id.timePicker);
 
+        //enhancement
+        dp.setMaxDate(System.currentTimeMillis());
 
         btn_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = "Name : " + et_name.getText().toString() +"\n Number: " +
-                        et_num.getText().toString() +"\n Pax: " +  et_pax.getText().toString();
-                if(cb_smoke.isChecked()) {
-                    text += "\n Smoke : Yes";
-                }
-                else{
-                    text += "\n Smoke : No";
-                }
-                text += "\n Date : " + dp.getDayOfMonth() + "/" + (dp.getMonth() + 1) + "/" + dp.getYear();
-                text += "\n Time : " + tp.getCurrentHour() + ":" + tp.getCurrentMinute();
+                String name = et_name.getText().toString();
+                String num = et_num.getText().toString();
+                String pax = et_pax.getText().toString();
 
-                Toast.makeText(getApplicationContext(),text, Toast.LENGTH_LONG).show();
+                //enhancement
+                if(name.isEmpty() || num.isEmpty() || pax.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please fill up all the blanks and try again", Toast.LENGTH_LONG).show();
+                }
 
+                else {
+                    String text = "Name : " + et_name.getText().toString() + "\n Number: " +
+                            et_num.getText().toString() + "\n Pax: " + et_pax.getText().toString();
+                    if (cb_smoke.isChecked()) {
+                        text += "\n Smoke : Yes";
+                    } else {
+                        text += "\n Smoke : No";
+                    }
+                    text += "\n Date : " + dp.getDayOfMonth() + "/" + (dp.getMonth() + 1) + "/" + dp.getYear();
+                    text += "\n Time : " + tp.getCurrentHour() + ":" + tp.getCurrentMinute();
+
+                    Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -77,6 +88,23 @@ public class MainActivity extends AppCompatActivity {
                 tp.setCurrentMinute(30);
             }
         });
+
+        //enhancement
+        tp.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                if(hourOfDay < 7){
+                    tp.setCurrentHour(8);
+                    Toast.makeText(getApplicationContext(),"Please pick a timing after 8am", Toast.LENGTH_LONG).show();
+                }
+                else if (hourOfDay > 20){
+                    tp.setCurrentHour(20);
+                    Toast.makeText(getApplicationContext(),"Please pick a timing before 9pm", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
 
     }
 }
